@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'Walterstj/maven-plus-docker'
+      image 'chaitannyaa/maven-plus-docker'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
@@ -14,7 +14,7 @@ pipeline {
     }
     stage('Code Analysis with SonarQube') {
       environment {
-        SONAR_URL = "http://3.238.147.185:9000"
+        SONAR_URL = "http://http://3.82.146.97:9000"
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
@@ -24,7 +24,7 @@ pipeline {
     }
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "Walterstj/java_awesome-cicd:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "chaitannyaa/java_awesome-cicd:${BUILD_NUMBER}"
         REGISTRY_CREDENTIALS = credentials('dockerHub')
       }
       steps {
@@ -39,7 +39,7 @@ pipeline {
     }
     stage('Update Deployment File') {
         environment {
-            GIT_REPO_NAME = "Jenkins_ArgoCD_Sonarcube_Java_Webapp_K8s"
+            GIT_REPO_NAME = "jenkins_argoCD_Sona_k8s_Javapp"
             GIT_USER_NAME = "Walterstj"
         }
         steps {
